@@ -1,0 +1,10 @@
+<h1>The Twitters</h1>
+
+<%= @user.account_name %>
+
+<% @timeline.each do |tweet| %>
+  <p>
+    <%= tweet.full_text %>
+  </p>
+<% end %>
+
