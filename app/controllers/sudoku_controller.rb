@@ -19,7 +19,12 @@ class SudokuController < ApplicationController
     sudoku = Sudoku.new(board)
     sudoku_presenter = SudokuPresenter.new(sudoku)
 
-    sudoku.solve!
+    #profile = RubyProf.profile do
+      sudoku.solve!
+    #end
+
+    #printer = RubyProf::GraphPrinter.new(profile)
+    #printer.print(STDOUT, {})
 
     @rows = sudoku_presenter.rows
     @columns = sudoku_presenter.columns

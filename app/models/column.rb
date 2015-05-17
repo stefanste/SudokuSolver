@@ -7,6 +7,7 @@ class Column < Group
   def initialize(rows, col_index)
     @numbers = rows.map{|row| row.numbers[col_index] }
     @column_index = col_index
+    super
   end
 
 end

@@ -1,0 +1,1 @@
+class RecursionException < Exception; end

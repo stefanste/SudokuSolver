@@ -7,6 +7,7 @@ class Row < Group
   def initialize(row_array, index)
     @numbers = row_array
     @row_index = index
+    super
   end
 
 end

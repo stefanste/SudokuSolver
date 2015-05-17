@@ -1,8 +1,8 @@
 class Position
 
-  attr_accessor :number, :row, :column, :square, :possible_values
+  attr_accessor :number, :row, :column, :square, :possible_values, :search_score, :index
 
-  ALMOST_KNOWN_SIZE = 3
+  ALMOST_KNOWN_SIZE = 2
 
   def initialize(number, row, column, square)
     @number = number
@@ -52,4 +52,12 @@ class Position
   def known?
     @number != 0
   end
+
+  def set_indexes(index)
+    @index = index
+    row.position_indexes << index
+    column.position_indexes << index
+    square.position_indexes << index
+  end
+
 end

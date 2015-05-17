@@ -7,6 +7,7 @@ class Square < Group
   def initialize(array, square_index)
     @numbers = array
     @index = square_index
+    super
   end
 
 end
