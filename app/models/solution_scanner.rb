@@ -2,15 +2,14 @@ require_relative 'solution_printer'
 
 class SolutionScanner
 
-  attr_reader :found_anything
+  attr_reader :positions
 
   def initialize(positions)
     @positions = positions
     @discovery_counter = 0
-    @found_anything = false
   end
 
-  def scan
+  def scan!
     while true do
       num_known_positions = known_positions.size
       
@@ -33,6 +32,16 @@ class SolutionScanner
         return false
       end
     end
+  end
+
+  def known_positions
+    @positions.select{|position|
+      position.known?
+    }
+  end
+
+  def solved?
+    known_positions.size == 81
   end
 
   private
@@ -58,7 +67,6 @@ class SolutionScanner
   def set_position(position, number)
     position.number = number
     @discovery_counter = 0
-    @found_anything = true
   end
 
   def unknown_positions_in(group)
@@ -68,19 +76,7 @@ class SolutionScanner
   end
   
   def positions_for(group)
-    @positions.select{|position|
-      position.send(group.class.name.downcase) == group
-    }
-  end
-
-  def known_positions
-    @positions.select{|position|
-      position.known?
-    }
-  end
-
-  def solved?
-    known_positions.size == 81   
+    group.position_indexes.map { |index| @positions[index] }
   end
 
 end

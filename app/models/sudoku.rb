@@ -23,9 +23,12 @@ class Sudoku
   end
 
   def solve!
-    return if SolutionScanner.new(@positions).scan
+    simple_scanner = SolutionScanner.new(@positions)
+    simple_scanner.scan!
+    return if simple_scanner.solved?
 
-    @positions = RecursiveScanner.new(@positions).scan
+    recursive_scanner = RecursiveScanner.new(@positions)
+    @positions = recursive_scanner.scan!
     if @positions.present?
       update_groups_from_positions
     else
@@ -44,6 +47,7 @@ class Sudoku
     @positions.each_with_index do |position, index|
       @rows[index/9].add(position.number, index % 9)
       @columns[index % 9].add(position.number, index/9)
+
       square = 3 * (position.row.row_index / 3).floor + (position.column.column_index / 3).floor
       square_index = 3 * (position.row.row_index % 3) + (position.column.column_index % 3)
       @squares[square].add(position.number, square_index)
@@ -55,7 +59,9 @@ class Sudoku
       row.numbers.each_with_index do |number, column_index|
         column = @columns[column_index]
         square = @squares[3 * (row_index / 3).floor + (column_index / 3).floor]
+
         @positions << Position.new(number, row, column, square)
+        @positions.last.set_indexes(9 * row_index + column_index)
       end
     end
   end
