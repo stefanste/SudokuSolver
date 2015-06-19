@@ -3,11 +3,12 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'users#index'
+  root 'sudoku#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
-  get 'things' => 'things#index'
+  get 'solve'  => 'sudoku#solve'
+  get 'new'    => 'sudoku#new'
   
   resources :tweets
   resources :users

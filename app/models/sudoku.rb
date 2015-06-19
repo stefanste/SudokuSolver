@@ -6,48 +6,67 @@ require_relative 'position'
 require_relative 'position_database'
 require_relative 'solution_scanner'
 
-class Board
+class Sudoku
 
-  attr_accessor :rows, :columns, :squares
+  attr_accessor :rows, :columns, :squares, :positions
 
-  def initialize(square_string)
+  def initialize(board_input)
     @rows = []
     @columns = []
     @squares = []
+    @positions = []
 
-    init_rows(square_string)
-    init_columns
-    init_squares
-    init_positions
+    build_rows(board_input)
+    build_columns
+    build_squares
+    build_positions
   end
 
   def solve!
-    SolutionScanner.new(self).process
+    return if SolutionScanner.new(@positions).scan
+
+    @positions = RecursiveScanner.new(@positions).scan
+    if @positions.present?
+      update_groups_from_positions
+    else
+      raise SudokuException, "Could not solve!"
+    end
   end
 
+  # TODO
   def valid?
     true
   end
 
   private
 
-  def init_positions
+  def update_groups_from_positions
+    @positions.each_with_index do |position, index|
+      @rows[index/9].add(position.number, index % 9)
+      @columns[index % 9].add(position.number, index/9)
+      square = 3 * (position.row.row_index / 3).floor + (position.column.column_index / 3).floor
+      square_index = 3 * (position.row.row_index % 3) + (position.column.column_index % 3)
+      @squares[square].add(position.number, square_index)
+    end
+  end
+
+  def build_positions
     @rows.each_with_index do |row, row_index|
       row.numbers.each_with_index do |number, column_index|
         column = @columns[column_index]
         square = @squares[3 * (row_index / 3).floor + (column_index / 3).floor]
-        PositionDatabase.instance.positions << Position.new(number, row, column, square)
+        @positions << Position.new(number, row, column, square)
       end
     end
   end
 
-  def init_columns
+  def build_columns
     (0..8).each do |col_index|
-      @columns << ::Column.new(rows, col_index) 
+      @columns << ::Column.new(rows, col_index)
     end
   end
 
-  def init_squares
+  def build_squares
     indexes = [(0..2), (3..5), (6..8)]
     
     indexes.each do |range|
@@ -58,7 +77,9 @@ class Board
     end 
   end
 
-  def init_rows(str)
+  def build_rows(str)
+    fail "Board is not valid." unless self.valid?
+    
     line_num = 0
     str.each_line do |line|
       line.gsub! '+', ''
@@ -74,7 +95,5 @@ class Board
         line_num += 1
       end
     end
-
-    fail "Board is not valid." unless self.valid?
   end
 end

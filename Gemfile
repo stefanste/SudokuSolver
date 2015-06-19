@@ -3,6 +3,8 @@ ruby '2.2.0'
 
 gem 'twitter', '~> 5.14.0'
 gem 'pg'
+gem 'method_profiler', '~> 2.0.1'
+gem 'ruby-prof', '~> 0.15.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

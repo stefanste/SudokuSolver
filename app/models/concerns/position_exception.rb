@@ -1,0 +1,1 @@
+class PositionException < Exception; end

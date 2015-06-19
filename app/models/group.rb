@@ -1,18 +1,9 @@
 class Group
 
-  def positions(group_type)
-    @positions ||= PositionDatabase.instance.positions.select do |position|
-      position.send(group_type) == self
-    end
-  end
+  attr_accessor :numbers
 
-  def unknown_positions
-    positions.select {|position| position.unknown? }
-  end
-
-  def add(number)
-    numbers.delete(0)
-    numbers << number
+  def add(number, index = nil)
+    numbers[index] = number
   end
 
   def [](index)

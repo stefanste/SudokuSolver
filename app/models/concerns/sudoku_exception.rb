@@ -1,0 +1,1 @@
+class SudokuException < Exception; end

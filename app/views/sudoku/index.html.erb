@@ -1,0 +1,22 @@
+<p class='text-center'>
+  Hey!
+</p>
+
+<%= form_tag '/solve', method: :get %>
+<table>
+  <% @rows.each_with_index do |row, row_index| %>
+    <tr>
+      <% @columns.each_with_index do |column, col_index| %>
+        <td>
+          <% value = column.present? ? column[row_index] : nil %>
+          <%= text_field_tag "number[#{row_index}_#{col_index}]", value, size: 2, class: 'sudoku-numbers number text-center', maxlength: 1 %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<div class='row text-center'>
+  <%= submit_tag 'Solve!', class: 'btn btn-primary', style: 'width:100px' %>
+  <%= link_to 'Clear Board', '/new', class: 'btn btn-primary', role: 'button' %>
+</div>

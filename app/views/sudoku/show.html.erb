@@ -1,0 +1,18 @@
+<p class='text-center'>
+  Ya!
+</p>
+<table>
+  <% @rows.each_with_index do |row, row_index| %>
+    <tr>
+      <% @columns.each_with_index do |column, col_index| %>
+        <td>
+          <%= text_field_tag "number[#{row_index}_#{col_index}]", column[row_index], size: 2, class: 'sudoku-numbers number text-center', maxlength: 1 %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<div class='row text-center'>
+  <%= link_to 'Clear Board', '/new', class: 'btn btn-primary', role: 'button' %>
+</div>

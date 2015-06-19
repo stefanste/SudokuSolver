@@ -6,10 +6,14 @@ class PositionDatabase
     @positions = []
   end
 
-  @@instance = PositionDatabase.new
+  @@instance ||= PositionDatabase.new
 
   def self.instance
     @@instance
+  end
+
+  def self.all
+    instance.positions
   end
 
   def known_positions

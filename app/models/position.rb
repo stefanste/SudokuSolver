@@ -2,6 +2,8 @@ class Position
 
   attr_accessor :number, :row, :column, :square, :possible_values
 
+  ALMOST_KNOWN_SIZE = 3
+
   def initialize(number, row, column, square)
     @number = number
     @row = row
@@ -23,13 +25,24 @@ class Position
     @possible_values -= @square.numbers
   end
 
+  def number=(number)
+    @number = number
+    @row.add(number, @column.column_index)
+    @column.add(number, @row.row_index)
+    @square.add(number, 3 * (@row.row_index % 3) + (@column.column_index % 3))
+  end
+
   def could_be?(number)
     scan_row!
     scan_column!
     scan_square!
 
-    raise "ERROR: Position found with no possible values, unsolvable!" if @possible_values.empty?
+    raise PositionException, "ERROR: Position found with no possible values, unsolvable!" if @possible_values.empty?
     @possible_values.include?(number)
+  end
+
+  def almost_known?
+    unknown? && @possible_values.size <= ALMOST_KNOWN_SIZE
   end
 
   def unknown?
@@ -39,5 +52,4 @@ class Position
   def known?
     @number != 0
   end
-
 end

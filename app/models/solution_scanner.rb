@@ -2,18 +2,22 @@ require_relative 'solution_printer'
 
 class SolutionScanner
 
-  def initialize(board)
-    @board = board
+  attr_reader :found_anything
+
+  def initialize(positions)
+    @positions = positions
     @discovery_counter = 0
+    @found_anything = false
   end
 
-  def process
+  def scan
     while true do
-      num_known_positions = PositionDatabase.instance.known_positions.size
+      num_known_positions = known_positions.size
       
-      SolutionPrinter.execute! if solved?
-      
-      positions.each do |position|
+      SolutionPrinter.execute!(@positions) if solved?
+      return @positions if solved?
+
+      @positions.each do |position|
         next if position.known?
 
         scan_position(position)
@@ -22,12 +26,11 @@ class SolutionScanner
         scan_group_for_position(position, position.square)
       end
 
-      new_num_known_positions = PositionDatabase.instance.known_positions.size
-      @discovery_counter += 1 if num_known_positions == new_num_known_positions
+      @discovery_counter += 1 if num_known_positions == known_positions.size
       if @discovery_counter > 10
         puts 'Cannot find solution!'
-        SolutionPrinter.execute! if @discovery_counter > 10
-        # Execute recursive strategy!
+        SolutionPrinter.execute!(@positions)
+        return false
       end
     end
   end
@@ -36,14 +39,10 @@ class SolutionScanner
 
   def scan_group_for_position(position, group)
     position.possible_values.each do |possible_value|
-      other_possible_positions_for_value = group.unknown_positions - Array(position)
+      other_possible_positions_for_value = unknown_positions_in(group) - Array(position)
       
       if other_possible_positions_for_value.none? {|position| position.could_be?(possible_value) } # Process of elimination
-        position.number = possible_value
-        position.row.add(possible_value)
-        position.column.add(possible_value)
-        position.square.add(possible_value)
-        @discovery_counter = 0
+        set_position(position, possible_value)
       end
     end
   end
@@ -52,14 +51,36 @@ class SolutionScanner
     position.scan_row!
     position.scan_column!
     position.scan_square!
+    
+    set_position(position, position.possible_values.first) if position.possible_values.size == 1
   end
 
-  def positions
-    PositionDatabase.instance.positions
+  def set_position(position, number)
+    position.number = number
+    @discovery_counter = 0
+    @found_anything = true
+  end
+
+  def unknown_positions_in(group)
+    positions_for(group).select{|position|
+      position.unknown?
+    } 
+  end
+  
+  def positions_for(group)
+    @positions.select{|position|
+      position.send(group.class.name.downcase) == group
+    }
+  end
+
+  def known_positions
+    @positions.select{|position|
+      position.known?
+    }
   end
 
   def solved?
-    PositionDatabase.instance.known_positions.size == 81   
+    known_positions.size == 81   
   end
 
 end

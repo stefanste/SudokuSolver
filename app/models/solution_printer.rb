@@ -1,6 +1,6 @@
 module SolutionPrinter
 
-  def self.execute!
+  def self.execute!(positions)
     (0..8).each do |row|
       puts borderline if row % 3 == 0
       (0..8).each do |row_pos|
@@ -16,17 +16,13 @@ module SolutionPrinter
       end
       puts borderline if row == 8
     end
-    exit true
+    #exit true
   end
 
   private
 
   def self.borderline
     '+-------+-------+-------+'
-  end
-
-  def self.positions
-    PositionDatabase.instance.positions
   end
 
 end
