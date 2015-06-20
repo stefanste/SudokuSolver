@@ -17,27 +17,38 @@
 p {
   font-weight: bold;
   color: #8DA;
-  font-size:20px;
+  font-size: 20px;
 }
 
 table {
-  margin:1em auto;
+  margin: 1em auto;
 }
+
 td {
-  height:30px;
-  width:30px;
-  border:1px solid;
-  text-align:center;
+  height: 50px;
+  width: 50px;
+  border: 1px solid #CCC;
+  text-align: center;
 }
+
+td input {
+  border: 0px;
+  font-size: 22px;
+  width: 100%
+}
+
 td:first-child {
-  border-left:solid;
+  border-left: solid;
 }
+
 td:nth-child(3n) {
-  border-right:solid ;
+  border-right: solid;
 }
+
 tr:first-child {
-  border-top:solid;
+  border-top: solid;
 }
+
 tr:nth-child(3n) td {
-  border-bottom:solid ;
+  border-bottom: solid;
 }
