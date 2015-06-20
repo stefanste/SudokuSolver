@@ -8,15 +8,13 @@ class SudokuController < ApplicationController
   end
 
   def new
-    session[:rows].clear
-    session[:columns].clear
+    session[:rows].clear if session[:rows]
+    session[:columns].clear if session[:columns]
     redirect_to '/'
   end
 
   def solve
-    board = parse_params_into_board
-
-    sudoku = Sudoku.new(board)
+    sudoku = Sudoku.new(parse_params_into_board)
     sudoku_presenter = SudokuPresenter.new(sudoku)
 
     #profile = RubyProf.profile do
