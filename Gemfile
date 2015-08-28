@@ -3,6 +3,7 @@ ruby '2.2.0'
 
 gem 'twitter', '~> 5.14.0'
 gem 'pg'
+gem 'sqlite3'
 gem 'method_profiler', '~> 2.0.1'
 gem 'ruby-prof', '~> 0.15.6'
 
