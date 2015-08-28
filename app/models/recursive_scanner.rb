@@ -5,9 +5,8 @@ class RecursiveScanner
   attr_reader :solved, :positions
   alias :solved? :solved
 
-  def initialize(positions, depth = 0)
+  def initialize(positions)
     @positions = positions
-    @depth = depth
   end
 
   def scan!
@@ -21,9 +20,10 @@ class RecursiveScanner
         begin
           snapshot = deep_clone @positions
           scanner = SolutionScanner.new(snapshot)
-          return snapshot if scanner.scan!
+          scanner.scan!
+          return snapshot if scanner.solved?
 
-          deeper_scan = RecursiveScanner.new(snapshot, @depth += 1).scan!
+          deeper_scan = RecursiveScanner.new(snapshot).scan!
           return deeper_scan if deeper_scan.present?
         rescue PositionException
           break

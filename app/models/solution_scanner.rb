@@ -2,6 +2,7 @@ require_relative 'solution_printer'
 
 class SolutionScanner
 
+  MAX_LOOPS_WITHOUT_DISCOVERY = 10
   attr_reader :positions
 
   def initialize(positions)
@@ -26,7 +27,7 @@ class SolutionScanner
       end
 
       @discovery_counter += 1 if num_known_positions == known_positions.size
-      if @discovery_counter > 10
+      if @discovery_counter > MAX_LOOPS_WITHOUT_DISCOVERY
         puts 'Cannot find solution!'
         SolutionPrinter.execute!(@positions)
         return false
@@ -35,9 +36,7 @@ class SolutionScanner
   end
 
   def known_positions
-    @positions.select{|position|
-      position.known?
-    }
+    @positions.select { |position| position.known? }
   end
 
   def solved?

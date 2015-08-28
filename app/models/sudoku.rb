@@ -1,11 +1,3 @@
-require_relative 'row'
-require_relative 'column'
-require_relative 'square'
-require_relative 'group'
-require_relative 'position'
-require_relative 'position_database'
-require_relative 'solution_scanner'
-
 class Sudoku
 
   attr_accessor :rows, :columns, :squares, :positions
