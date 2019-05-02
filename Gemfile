@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
-ruby '2.2.0'
+ruby '2.6.1'
 
+gem 'json', '>= 1.8.5'
 gem 'twitter', '~> 5.14.0'
 gem 'pg'
 gem 'sqlite3'
