@@ -8,7 +8,7 @@ gem 'method_profiler', '~> 2.0.1'
 gem 'ruby-prof', '~> 0.15.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0'
+gem 'rails', '~> 5.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -40,6 +40,7 @@ gem 'unicorn'
 
 group :development, :test do
 	gem 'rspec-rails', '~> 3.0'
+	gem 'listen'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
