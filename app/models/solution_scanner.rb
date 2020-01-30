@@ -1,7 +1,6 @@
 require_relative 'solution_printer'
 
 class SolutionScanner
-
   MAX_LOOPS_WITHOUT_DISCOVERY = 10
   attr_reader :positions
 
@@ -13,7 +12,7 @@ class SolutionScanner
   def scan!
     while true do
       num_known_positions = known_positions.size
-      
+
       SolutionPrinter.execute!(@positions) if solved?
       return @positions if solved?
 
@@ -48,7 +47,7 @@ class SolutionScanner
   def scan_group_for_position(position, group)
     position.possible_values.each do |possible_value|
       other_possible_positions_for_value = unknown_positions_in(group) - Array(position)
-      
+
       if other_possible_positions_for_value.none? {|position| position.could_be?(possible_value) } # Process of elimination
         set_position(position, possible_value)
       end
@@ -59,7 +58,7 @@ class SolutionScanner
     position.scan_row!
     position.scan_column!
     position.scan_square!
-    
+
     set_position(position, position.possible_values.first) if position.possible_values.size == 1
   end
 
@@ -71,11 +70,10 @@ class SolutionScanner
   def unknown_positions_in(group)
     positions_for(group).select{|position|
       position.unknown?
-    } 
+    }
   end
-  
+
   def positions_for(group)
     group.position_indexes.map { |index| @positions[index] }
   end
-
 end

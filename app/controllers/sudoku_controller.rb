@@ -1,7 +1,6 @@
 class SudokuController < ApplicationController
-
   include PositionResetter
-  
+
   def index
     @rows = session[:rows].presence || Array.new(9)
     @columns = session[:columns].presence || Array.new(9)
@@ -50,5 +49,4 @@ class SudokuController < ApplicationController
     session[:rows] = sudoku_presenter.rows
     session[:columns] = sudoku_presenter.columns
   end
-
 end

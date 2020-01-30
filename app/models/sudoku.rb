@@ -1,5 +1,4 @@
 class Sudoku
-
   attr_accessor :rows, :columns, :squares, :positions
 
   def initialize(board_input)
@@ -66,18 +65,18 @@ class Sudoku
 
   def build_squares
     indexes = [(0..2), (3..5), (6..8)]
-    
+
     indexes.each do |range|
       indexes.each do |inner_range|
         numbers = rows[range].map{|row| row[inner_range] }.flatten
         squares << ::Square.new(numbers, squares.size)
       end
-    end 
+    end
   end
 
   def build_rows(str)
     fail "Board is not valid." unless self.valid?
-    
+
     line_num = 0
     str.each_line do |line|
       line.gsub! '+', ''

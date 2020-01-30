@@ -1,7 +1,6 @@
 require_relative 'group'
 
 class Column < Group
-
   attr_accessor :column_index
 
   def initialize(rows, col_index)
@@ -9,5 +8,4 @@ class Column < Group
     @column_index = col_index
     super
   end
-
 end

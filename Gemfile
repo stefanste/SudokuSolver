@@ -3,12 +3,11 @@ ruby '2.6.5'
 
 gem 'twitter', '~> 5.14.0'
 gem 'pg'
-gem 'sqlite3'
 gem 'method_profiler', '~> 2.0.1'
 gem 'ruby-prof', '~> 0.15.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2'
+gem 'rails', '~> 6.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets

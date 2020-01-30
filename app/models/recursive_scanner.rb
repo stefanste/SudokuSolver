@@ -1,7 +1,6 @@
 require_relative 'solution_printer'
 
 class RecursiveScanner
-
   attr_reader :solved, :positions
   alias :solved? :solved
 
@@ -32,7 +31,7 @@ class RecursiveScanner
         end
       end
     end
-    
+
     return false
   end
 
@@ -53,7 +52,7 @@ class RecursiveScanner
             @solved = true
             return scanner.positions
           end
-          
+
           position.search_score = scanner.known_positions.size
         rescue PositionException
           position.search_score = 0
@@ -69,5 +68,4 @@ class RecursiveScanner
   def deep_clone(object)
     Marshal.load Marshal.dump(object)
   end
-
 end

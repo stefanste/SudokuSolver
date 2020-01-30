@@ -1,5 +1,4 @@
 class Position
-
   attr_accessor :number, :row, :column, :square, :possible_values, :search_score, :index
 
   ALMOST_KNOWN_SIZE = 2
@@ -59,5 +58,4 @@ class Position
     column.position_indexes << index
     square.position_indexes << index
   end
-
 end

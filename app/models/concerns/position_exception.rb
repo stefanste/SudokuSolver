@@ -1,1 +1,1 @@
-class PositionException < Exception; end
+class PositionException < SudokuException; end

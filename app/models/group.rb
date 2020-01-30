@@ -1,5 +1,4 @@
 class Group
-
   attr_accessor :numbers, :position_indexes
 
   def initialize(group_array, index)
@@ -13,5 +12,4 @@ class Group
   def [](index)
     @numbers[index]
   end
-
 end

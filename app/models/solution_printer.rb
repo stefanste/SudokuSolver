@@ -1,5 +1,4 @@
 module SolutionPrinter
-
   def self.execute!(positions)
     (0..8).each do |row|
       puts borderline if row % 3 == 0
@@ -24,5 +23,4 @@ module SolutionPrinter
   def self.borderline
     '+-------+-------+-------+'
   end
-
 end
